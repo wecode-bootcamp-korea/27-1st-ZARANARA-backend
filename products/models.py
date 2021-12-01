@@ -52,8 +52,8 @@ class ProductOption(TimeStampModel):
     sales               = models.IntegerField(default=0)
     stock               = models.IntegerField(default=0)
     thumbnail_image_url = models.URLField(max_length=2000)
-    size                = models.ForeignKey('Size', on_delete=models.CASCADE)
-    color               = models.ForeignKey('Color', on_delete=models.CASCADE)
+    size                = models.ForeignKey('Size', on_delete=models.CASCADE, null=True)
+    color               = models.ForeignKey('Color', on_delete=models.CASCADE, null=True)
     product             = models.ForeignKey('Product', on_delete=models.CASCADE)
     
     class Meta: 

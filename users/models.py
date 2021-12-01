@@ -6,7 +6,7 @@ from products.models import Product, ProductOption
 class User(TimeStampModel): 
     name     = models.CharField(max_length=300)
     email    = models.CharField(max_length=300, unique=True)
-    password = models.BinaryField(max_length=300)
+    password = models.CharField(max_length=300)
     phone    = models.CharField(max_length=100, null=True)
     cash     = models.DecimalField(default=0, max_digits=65, decimal_places=2)
     
