@@ -1,8 +1,8 @@
-from django.db     import models
+from django.db       import models
 
-from core.models   import TimeStampModel
-from users.models  import User
-from stocks.models import Stock
+from core.models     import TimeStampModel
+from products.models import ProductOption
+from users.models    import User
 
 class OrderStatus(models.Model): 
     name = models.CharField(max_length=200)
@@ -20,7 +20,7 @@ class Order(TimeStampModel):
 class OrderProduct(models.Model): 
     count           = models.IntegerField(default=1)
     tracking_number = models.CharField(max_length=500)
-    stock           = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    stock           = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     order           = models.ForeignKey('Order', on_delete=models.CASCADE)
     delivery_status = models.ForeignKey('DeliveryStatus', on_delete=models.CASCADE)
 
