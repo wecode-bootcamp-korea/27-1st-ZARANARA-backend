@@ -1,5 +1,4 @@
 import json,re, bcrypt
-from json.decoder import JSONDecodeError
 
 from django.http.response import JsonResponse
 from django.views import View
@@ -39,20 +38,3 @@ class SignUpView(View):
 
         except KeyError:
             return JsonResponse({"ERROR" : "KEY_ERROR"}, status = 400)
-
-# class TestView(View):
-#     def get(self, request):
-#         products = Product.objects.all()
-#         result = []
-
-#         for product in products:
-#             result.append(
-#                 {
-#                     'product_id' : product.id,
-#                     'product_name' : product.name
-#                 }
-#             )
-
-#         return JsonResponse({
-#             'result' : result
-#         }, status=200)
