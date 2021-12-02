@@ -14,6 +14,7 @@ class Product(TimeStampModel):
     name        = models.CharField(max_length=100)
     price       = models.DecimalField(default=0, max_digits=65, decimal_places=2)
     information = models.CharField(max_length=500)
+    keyword     = models.CharField(max_length=100, null=True)
     category    = models.ForeignKey('Category', on_delete=models.CASCADE)
     
     class Meta: 
@@ -52,8 +53,8 @@ class ProductOption(TimeStampModel):
     sales               = models.IntegerField(default=0)
     stock               = models.IntegerField(default=0)
     thumbnail_image_url = models.URLField(max_length=2000)
-    size                = models.ForeignKey('Size', on_delete=models.CASCADE)
-    color               = models.ForeignKey('Color', on_delete=models.CASCADE)
+    size                = models.ForeignKey('Size', on_delete=models.CASCADE, null=True)
+    color               = models.ForeignKey('Color', on_delete=models.CASCADE, null=True)
     product             = models.ForeignKey('Product', on_delete=models.CASCADE)
     
     class Meta: 

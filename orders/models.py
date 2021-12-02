@@ -20,7 +20,7 @@ class Order(TimeStampModel):
 class OrderProduct(models.Model): 
     count           = models.IntegerField(default=1)
     tracking_number = models.CharField(max_length=500)
-    stock           = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    product_option  = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     order           = models.ForeignKey('Order', on_delete=models.CASCADE)
     delivery_status = models.ForeignKey('DeliveryStatus', on_delete=models.CASCADE)
 
