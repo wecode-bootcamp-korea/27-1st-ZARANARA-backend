@@ -14,6 +14,7 @@ class Product(TimeStampModel):
     name        = models.CharField(max_length=100)
     price       = models.DecimalField(default=0, max_digits=65, decimal_places=2)
     information = models.CharField(max_length=500)
+    keyword     = models.CharField(max_length=100, null=True)
     category    = models.ForeignKey('Category', on_delete=models.CASCADE)
     
     class Meta: 
