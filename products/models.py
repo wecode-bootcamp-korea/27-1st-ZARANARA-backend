@@ -21,10 +21,10 @@ class Product(TimeStampModel):
         db_table = 'products'
 
 class ProductSet(models.Model): 
-    set_name   = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='product_set')
-    item_name  = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='product_item')
-    x_position = models.IntegerField()
-    y_position = models.IntegerField()
+    product_set = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='product_set')
+    product     = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='product_item')
+    x_position  = models.IntegerField()
+    y_position  = models.IntegerField()
 
     class Meta: 
         db_table = 'product_sets'
