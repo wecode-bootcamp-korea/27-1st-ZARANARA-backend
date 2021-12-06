@@ -19,9 +19,10 @@ class ProductSlideView(View):
 class ProductSetListView(View):
     def get(self, request):
         list_item     = []
-        content_limit = None if request.GET.get('limit') is None else int(request.GET.get('limit'))
+        offset     = int(request.GET.get('offset', 0))
+        limit      = int(request.GET.get('limit', 2))
         items         = Product.objects.select_related('category')\
-                                    .filter(category__name='선물아이디어').order_by('-price')[:content_limit]
+                                    .filter(category__name='선물아이디어').order_by('-price')[offset:limit]
 
         for item in items: 
             product_items = ProductSet.objects.filter(product_set = item)
