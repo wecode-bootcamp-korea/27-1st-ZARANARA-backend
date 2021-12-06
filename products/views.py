@@ -28,8 +28,9 @@ class ProductSetListView(View):
         list_item = []
         offset    = int(request.GET.get('offset', 0))
         limit     = int(request.GET.get('limit', 2))
+        order     = request.GET.get('order', '-price')
         items     = Product.objects.select_related('category')\
-                                    .filter(category__name='선물아이디어').order_by('-price')[offset:limit]
+                                    .filter(category__name='선물아이디어').order_by(order)[offset:limit]
 
         for item in items: 
             product_items = ProductSet.objects.filter(product_set = item)
