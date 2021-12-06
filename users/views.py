@@ -28,7 +28,7 @@ class SignUpView(View):
                 name     = user_name,
                 email    = user_email,
                 password = hashed_password
-                )
+            )
             return JsonResponse({"RESULT" : "SUCCESS"}, status=200)
 
         except KeyError:
