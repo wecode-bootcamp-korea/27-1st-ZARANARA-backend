@@ -25,10 +25,10 @@ class ProductThemeView(View):
 
 class ProductSetListView(View):
     def get(self, request):
-        list_item     = []
-        offset     = int(request.GET.get('offset', 0))
-        limit      = int(request.GET.get('limit', 2))
-        items         = Product.objects.select_related('category')\
+        list_item = []
+        offset    = int(request.GET.get('offset', 0))
+        limit     = int(request.GET.get('limit', 2))
+        items     = Product.objects.select_related('category')\
                                     .filter(category__name='선물아이디어').order_by('-price')[offset:limit]
 
         for item in items: 
@@ -46,7 +46,7 @@ class ProductSetListView(View):
                             'price'     : product_item.product.price,
                             'x_position': product_item.x_position,
                             'y_position': product_item.y_position,
-                            'item_alt'       : product_item.product.productimage_set.all()[0].alt
+                            'item_alt'  : product_item.product.productimage_set.all()[0].alt
                     } 
                     for product_item in product_items
                     ]
