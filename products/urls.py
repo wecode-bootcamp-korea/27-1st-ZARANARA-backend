@@ -1,6 +1,4 @@
-from django.urls import path, re_path
-
-from products.models import Product
+from django.urls import path
 
 from .views import ProductSlideView
 
