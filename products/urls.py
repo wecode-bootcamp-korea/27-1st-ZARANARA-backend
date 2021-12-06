@@ -5,5 +5,5 @@ from products.models import Product
 from .views import ProductSlideView
 
 urlpatterns = [
-    path('/silde', ProductSlideView.as_view()),
+    path('/slide', ProductSlideView.as_view()),
 ]
