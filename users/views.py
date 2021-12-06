@@ -1,4 +1,4 @@
-import json, bcrypt, jwt
+import json, bcrypt, jwt, os
 
 from django.http.response   import JsonResponse
 from django.core.exceptions import ValidationError
@@ -47,7 +47,7 @@ class LoginView(View):
             user_db       = User.objects.get(email = user_email)  
 
             if bcrypt.checkpw(user_password.encode('utf-8'), user_db.password.encode('utf-8')):
-                token = jwt.encode({'user_id': user_db.id}, SECRET_KEY, algorithm = 'HS256')
+                token = jwt.encode({'user_id': user_db.id}, SECRET_KEY, algorithm = os.evrion['ALGORITHM'])
                 return JsonResponse({'MESSAGE' : 'SUCCESS', 'ACCESS_TOKEN' : token}, status=200)
             return JsonResponse({'ERROR' : 'PASSWORD_INVAILD_USER'}, status=401)
                                  
