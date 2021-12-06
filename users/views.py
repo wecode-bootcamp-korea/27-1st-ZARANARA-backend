@@ -35,7 +35,7 @@ class SignUpView(View):
             return JsonResponse({"MESSAGE" : "KEY_ERROR"}, status = 400)
 
         except ValidationError as v:
-            return JsonResponse({'MESSAGE' : v.message}, status=400)
+            return JsonResponse({'MESSAGE' : v.message}, status=401)
 
 
 class LoginView(View):

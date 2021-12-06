@@ -10,7 +10,7 @@ def SigninDecorator(func):
         try:
             token        = request.headers.get('Authorization', None)
             payload      = jwt.decode(token, SECRET_KEY, algorithms=os.environ["ALGORITHM"])
-            user         = User.objects.get(id = payload['id'])
+            user         = User.objects.get(id = payload['user_id'])
             request.user = user
 
         except jwt.exceptions.DecodeError:
