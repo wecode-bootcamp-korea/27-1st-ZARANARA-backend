@@ -15,11 +15,10 @@ class ProductDetailView(View):
             product_materials  = product.material_set.all()
             product_option     = product.productoption_set.all() 
             product_images     = product.productimage_set.all()
-            user               = request.GET.get("user",0)
-            like_bool          = Like.objects.filter(user=user).exists() #임시로 유저아이디 1번을 지정하였음. 추후 토큰 데코레이터 추가 예정
+            like_bool          = Like.objects.filter(user=request.user).exists()
 
-            product_theme  = product.themeproduct_set.get(product=product.id)
-            theme_products = ThemeProduct.objects.filter(theme=product_theme.id)
+            product_theme      = product.themeproduct_set.get(product=product.id)
+            theme_products     = ThemeProduct.objects.filter(theme=product_theme.id)
 
             material_objects   = [x for x in product_materials]
             image_objects      = [x for x in product_images]
@@ -38,7 +37,6 @@ class ProductDetailView(View):
                     "material_name"    : [material.name for material in material_objects],
                     "material_caution" : [material.caution for material in material_objects],
                     "detail_image"     : [{
-
                         "url"          : image.url,
                         "alt"          : image.alt
                     }for image in image_objects],
