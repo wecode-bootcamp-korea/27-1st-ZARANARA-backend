@@ -2,8 +2,8 @@ from django.urls import path, re_path
 
 from products.models import Product
 
-from .views import ProductMainView
+from .views import ProductSlideView
 
 urlpatterns = [
-    path('', ProductMainView.as_view()),
+    path('/silde', ProductSlideView.as_view()),
 ]
