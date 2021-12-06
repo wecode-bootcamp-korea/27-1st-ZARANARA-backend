@@ -3,7 +3,7 @@ import json
 from django.views   import View
 from django.http    import JsonResponse
 
-from .models        import Theme, ThemeProduct, Product, ProductSet
+from .models        import Theme, ThemeProduct, Product, ProductSet, Category
 
 class ProductThemeView(View): 
     def get(self, request): 
@@ -54,3 +54,21 @@ class ProductSetListView(View):
                 }
             )
         return JsonResponse({'list_item': list_item}, status = 200)
+
+class ProductListView(View):
+    def get(self, request, category_id):
+        category = Category.objects.get(id = category_id)
+        order    = str(request.GET.get('order','created_at'))
+        offset   = int(request.GET.get('offset', 0))
+        limit    = int(request.GET.get('limit', 4))
+        items    = Product.objects.select_related('category').filter(category = category).order_by(order)[offset:limit]
+        results  = [
+            {
+                'id'   : item.id,
+                'name' : item.name,
+                'price': item.price,
+                'image': item.productimage_set.all()[0].url
+            }
+            for item in items
+            ]
+        return JsonResponse({'results' : results, 'count': len(items)}, status =200)
