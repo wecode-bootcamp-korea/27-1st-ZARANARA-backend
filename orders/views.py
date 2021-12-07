@@ -55,4 +55,10 @@ class UserCartView(View):
 class CartProductEmptyView(View):
     def post(self, request):
          # 담은 장바구니를 한개의 이미지를 삭제한다면, 장바구니의 이미지만 삭제
-        
+
+# def 장바구니 담은 합계
+
+# def 장바구니 부분 삭제
+
+# def 장바구니 전체 바우는
+
