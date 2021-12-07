@@ -54,12 +54,21 @@ DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `quantity` int NOT NULL,
+<<<<<<< HEAD
   `product_option_id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `carts_user_id_3a9d1785_fk_users_id` (`user_id`),
   KEY `carts_product_option_id_428c8f62_fk_product_options_id` (`product_option_id`),
   CONSTRAINT `carts_product_option_id_428c8f62_fk_product_options_id` FOREIGN KEY (`product_option_id`) REFERENCES `product_options` (`id`),
+=======
+  `ProductOption_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `carts_user_id_3a9d1785_fk_users_id` (`user_id`),
+  KEY `carts_ProductOption_id_0807f3d5_fk_product_options_id` (`ProductOption_id`),
+  CONSTRAINT `carts_ProductOption_id_0807f3d5_fk_product_options_id` FOREIGN KEY (`ProductOption_id`) REFERENCES `product_options` (`id`),
+>>>>>>> main
   CONSTRAINT `carts_user_id_3a9d1785_fk_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -185,7 +194,11 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +207,11 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2021-12-01 11:15:09.126720'),(2,'contenttypes','0002_remove_content_type_name','2021-12-01 11:15:09.138865'),(3,'products','0001_initial','2021-12-01 11:15:09.264071'),(4,'users','0001_initial','2021-12-01 11:15:09.345295'),(5,'orders','0001_initial','2021-12-01 11:15:09.407467'),(6,'sessions','0001_initial','2021-12-01 11:15:09.415014'),(7,'orders','0002_rename_stock_orderproduct_product_option','2021-12-01 17:30:40.284402'),(8,'users','0002_rename_stock_cart_product_option','2021-12-01 17:30:40.306453'),(9,'users','0003_alter_user_password','2021-12-01 21:26:12.406120'),(10,'products','0002_auto_20211201_2135','2021-12-01 21:35:33.516189'),(11,'products','0003_product_keyword','2021-12-02 16:02:50.511088'),(12,'products','0002_auto_20211203_1650','2021-12-03 16:50:59.645296');
+=======
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2021-12-01 18:00:43.890132'),(2,'contenttypes','0002_remove_content_type_name','2021-12-01 18:00:44.014397'),(3,'products','0001_initial','2021-12-01 18:00:44.312295'),(4,'users','0001_initial','2021-12-01 18:00:44.427586'),(5,'orders','0001_initial','2021-12-01 18:00:44.518263'),(6,'sessions','0001_initial','2021-12-01 18:00:44.531570'),(7,'users','0002_alter_user_password','2021-12-01 21:26:29.062353'),(8,'products','0002_auto_20211201_2135','2021-12-01 21:35:29.301555'),(9,'orders','0002_rename_stock_orderproduct_productoption','2021-12-01 21:41:30.772147'),(10,'users','0003_rename_stock_cart_productoption','2021-12-01 21:41:30.804884'),(11,'products','0003_product_keyword','2021-12-02 15:43:44.845433');
+>>>>>>> main
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +256,11 @@ CREATE TABLE `likes` (
   KEY `likes_user_id_0899754c_fk_users_id` (`user_id`),
   CONSTRAINT `likes_product_id_7f73cfa5_fk_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `likes_user_id_0899754c_fk_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,6 +269,10 @@ CREATE TABLE `likes` (
 
 LOCK TABLES `likes` WRITE;
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+<<<<<<< HEAD
+=======
+INSERT INTO `likes` VALUES (1,1,1),(2,2,8);
+>>>>>>> main
 /*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,7 +317,11 @@ CREATE TABLE `materials_product` (
   KEY `materials_product_product_id_16327bcf_fk_products_id` (`product_id`),
   CONSTRAINT `materials_product_material_id_e98b5ffd_fk_materials_id` FOREIGN KEY (`material_id`) REFERENCES `materials` (`id`),
   CONSTRAINT `materials_product_product_id_16327bcf_fk_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +330,11 @@ CREATE TABLE `materials_product` (
 
 LOCK TABLES `materials_product` WRITE;
 /*!40000 ALTER TABLE `materials_product` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `materials_product` VALUES (1,1,1),(3,2,3),(2,3,2),(5,4,5),(4,5,4);
+=======
+INSERT INTO `materials_product` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,2,1),(6,2,2),(7,2,5);
+>>>>>>> main
 /*!40000 ALTER TABLE `materials_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,6 +352,7 @@ CREATE TABLE `order_products` (
   `delivery_status_id` bigint NOT NULL,
   `order_id` bigint NOT NULL,
   `product_option_id` bigint NOT NULL,
+<<<<<<< HEAD
   PRIMARY KEY (`id`),
   KEY `order_products_delivery_status_id_c5f5b483_fk_delivery_status_id` (`delivery_status_id`),
   KEY `order_products_order_id_b5077dc2_fk_orders_id` (`order_id`),
@@ -326,6 +360,9 @@ CREATE TABLE `order_products` (
   CONSTRAINT `order_products_delivery_status_id_c5f5b483_fk_delivery_status_id` FOREIGN KEY (`delivery_status_id`) REFERENCES `delivery_status` (`id`),
   CONSTRAINT `order_products_order_id_b5077dc2_fk_orders_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `order_products_product_option_id_c0bd074b_fk_product_options_id` FOREIGN KEY (`product_option_id`) REFERENCES `product_options` (`id`)
+=======
+  PRIMARY KEY (`id`)
+>>>>>>> main
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -406,7 +443,11 @@ CREATE TABLE `product_images` (
   PRIMARY KEY (`id`),
   KEY `product_images_product_id_28ebf5f0_fk_products_id` (`product_id`),
   CONSTRAINT `product_images_product_id_28ebf5f0_fk_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +456,11 @@ CREATE TABLE `product_images` (
 
 LOCK TABLES `product_images` WRITE;
 /*!40000 ALTER TABLE `product_images` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `product_images` VALUES (1,'베어 프린트 이불커버 이미지 01','https://images.unsplash.com/photo-1607110217074-f70b1947a9e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',1),(2,'베어 프린트 이불커버 이미지 02','https://images.unsplash.com/photo-1543346242-2b8e41fb91ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2787&q=80',1),(3,'엘리펀트 자수 타월 이미지 01','https://url.kr/jyn1wu',2),(4,'엘리펀트 자수 타월 이미지 02','https://images.unsplash.com/photo-1512475190635-3b6f26557377?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',2),(5,'레더 부티 이미지 01','https://url.kr/jyn1wu',3),(6,'레더 부티 이미지 02','https://images.unsplash.com/photo-1548246671-c518156dcc6d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80',3),(7,'강아지 머그 이미지 01','https://images.unsplash.com/photo-1607877342097-d5431c3542fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',4),(8,'강아지 머그 이미지 02','https://images.unsplash.com/photo-1607877742574-a483ae272995?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2475&q=80',4),(9,'로봇 북마크 이미지 01','https://images.unsplash.com/photo-1607877342024-27a1ee8b68d4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',5),(10,'로봇 북마크 이미지 02','https://images.unsplash.com/photo-1543467214-b247439848dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80',5),(11,'아이템 이미지였던것','아이템01-00.jpg',7),(12,'아이템 이미지였던것','아이템01-01.jpg',7),(13,'세트 이미지였던것','https://url.kr/jyn1wu',6),(14,'아이템 이미지였던것','아이템이미지02.jpg',8),(15,'메리 크리스마스','https://url.kr/1mqvdr',9);
+=======
+INSERT INTO `product_images` VALUES (1,'베어 프린트 이불커버 이미지 01','https://images.unsplash.com/photo-1607110217074-f70b1947a9e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',1),(2,'베어 프린트 이불커버 이미지 02','https://images.unsplash.com/photo-1543346242-2b8e41fb91ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2787&q=80',1),(3,'엘리펀트 자수 타월 이미지 01','https://images.unsplash.com/photo-1608959202013-2627dfa2ebd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',2),(4,'엘리펀트 자수 타월 이미지 02','https://images.unsplash.com/photo-1512475190635-3b6f26557377?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',2),(5,'레더 부티 이미지 01','https://images.unsplash.com/photo-1514999025575-abe7b789a944?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1990&q=80',3),(6,'레더 부티 이미지 02','https://images.unsplash.com/photo-1548246671-c518156dcc6d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80',3),(7,'강아지 머그 이미지 01','https://images.unsplash.com/photo-1607877342097-d5431c3542fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',4),(8,'강아지 머그 이미지 02','https://images.unsplash.com/photo-1607877742574-a483ae272995?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2475&q=80',4),(9,'로봇 북마크 이미지 01','https://images.unsplash.com/photo-1607877342024-27a1ee8b68d4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',5),(10,'로봇 북마크 이미지 02','https://images.unsplash.com/photo-1543467214-b247439848dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80',5);
+>>>>>>> main
 /*!40000 ALTER TABLE `product_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +497,11 @@ CREATE TABLE `product_options` (
 
 LOCK TABLES `product_options` WRITE;
 /*!40000 ALTER TABLE `product_options` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `product_options` VALUES (1,'2021-12-01 21:20:31.683388','2021-12-01 21:20:31.683400',121,190,'https://post-phinf.pstatic.net/MjAxOTA0MjZfMjc2/MDAxNTU2MjE2Njc1NjAz.5GjTVBEPY0kd2SExs3uiK2eeZ1K6pCae4MwViLxf8rcg.BN2Tr6BXUaFG_IJJOB4pSFLRdHqprgQxk-ugh-W0uZ4g.JPEG/KakaoTalk_20190426_032248653.jpg?type=w1200',3,1,1),(2,'2021-12-01 21:20:31.688982','2021-12-01 21:20:31.688996',11,0,'https://blog.kakaocdn.net/dn/vu3GC/btqT18KPi5Q/xKtz15fbo8nXdkAyfK9dbk/img.png',11,2,3),(3,'2021-12-01 21:20:31.691599','2021-12-01 21:20:31.691609',5,20,'https://t1.daumcdn.net/cfile/tistory/9927EA405F007B3F16',5,3,3),(4,'2021-12-01 21:20:31.693828','2021-12-01 21:20:31.693836',22,100,'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99AFD04A5F577D3E10',6,4,4),(5,'2021-12-01 21:20:31.695834','2021-12-01 21:20:31.695839',111,598,'https://t1.daumcdn.net/cfile/tistory/996F674C5E6F5AD914',11,5,4);
+=======
+INSERT INTO `product_options` VALUES (1,'2021-12-01 21:28:12.152651','2021-12-01 21:28:12.152683',121,190,'https://post-phinf.pstatic.net/MjAxOTA0MjZfMjc2/MDAxNTU2MjE2Njc1NjAz.5GjTVBEPY0kd2SExs3uiK2eeZ1K6pCae4MwViLxf8rcg.BN2Tr6BXUaFG_IJJOB4pSFLRdHqprgQxk-ugh-W0uZ4g.JPEG/KakaoTalk_20190426_032248653.jpg?type=w1200',3,1,1),(2,'2021-12-01 21:28:12.158984','2021-12-01 21:28:12.158994',11,0,'https://blog.kakaocdn.net/dn/vu3GC/btqT18KPi5Q/xKtz15fbo8nXdkAyfK9dbk/img.png',11,2,1),(3,'2021-12-01 21:28:12.161461','2021-12-01 21:28:12.161471',5,20,'https://t1.daumcdn.net/cfile/tistory/9927EA405F007B3F16',5,3,3),(4,'2021-12-01 21:28:12.164438','2021-12-01 21:28:12.164448',22,100,'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99AFD04A5F577D3E10',6,4,4),(5,'2021-12-01 21:28:12.167320','2021-12-01 21:28:12.167330',111,598,'https://t1.daumcdn.net/cfile/tistory/996F674C5E6F5AD914',5,5,4);
+>>>>>>> main
 /*!40000 ALTER TABLE `product_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -470,7 +519,11 @@ CREATE TABLE `product_sets` (
   `product_id` bigint NOT NULL,
   `product_set_id` bigint NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +532,11 @@ CREATE TABLE `product_sets` (
 
 LOCK TABLES `product_sets` WRITE;
 /*!40000 ALTER TABLE `product_sets` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `product_sets` VALUES (1,20,20,2,1),(2,20,20,7,6),(3,20,70,8,6);
+=======
+INSERT INTO `product_sets` VALUES (1,50,50,2,1),(2,50,50,3,1);
+>>>>>>> main
 /*!40000 ALTER TABLE `product_sets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,7 +559,11 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `products_category_id_a7a3a156_fk_categories_id` (`category_id`),
   CONSTRAINT `products_category_id_a7a3a156_fk_categories_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +572,11 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `products` VALUES (1,'2021-12-01 19:15:35.078407','2021-12-01 19:15:35.078419','글리터 베어 프린트 이불커버',69000.00,'곰 프린트와 글리터 별 디테일이 매치된 180TC 퍼케일 면 소재 이불 커버.',5,NULL),(2,'2021-12-01 19:15:35.082133','2021-12-01 19:15:35.082139','엘리펀트 자수 후드 타월',49000.00,'면 소재 키즈용 후드 타월. 코끼리 자수가 있는 블루 모노크롬 디자인.',7,NULL),(3,'2021-12-01 19:15:35.083938','2021-12-05 14:43:04.954356','레더 부티',49000.00,'브라운 가죽 부티. 편안한 착용감과 착용하기 쉬운 부착 스트랩.',4,NULL),(4,'2021-12-01 19:15:35.085276','2021-12-01 19:15:35.085282','강아지 쉐이프 실리콘 머그',9000.00,'귀 모양 손잡이가 달린 강아지 얼굴 모양 실리콘 머그.',6,NULL),(5,'2021-12-01 19:15:35.086464','2021-12-01 19:15:35.086469','로봇 북마크',11000.00,'책과 공책을 위한 책갈피. 로봇 자수 디자인 면 소재.',5,NULL),(6,'2021-12-03 21:36:20.777915','2021-12-03 21:36:20.777980','이케아 선물 세트 01',139000.00,'선물세트입니다.01',8,'아이들에게 좋은 선물 세트'),(7,'2021-12-03 21:38:00.321388','2021-12-03 21:38:00.321449','선물세트 01에 맞는 아이템 01',39000.00,'좋은 아이템01 입니다. ',7,'선물세트 01의 첫번째 아이템'),(8,'2021-12-03 21:38:21.849435','2021-12-03 21:38:21.849496','선물세트 01에 맞는 아이템 02',39000.00,'좋은 아이템02 입니다. ',6,'선물세트 02의 첫번째 아이템'),(9,'2021-12-03 21:55:43.091544','2021-12-03 21:55:43.091611','크리스마스테마 아이템 01',49000.00,'',4,'메리 크리스마스');
+=======
+INSERT INTO `products` VALUES (1,'2021-12-01 19:15:28.802098','2021-12-01 19:15:28.802131','글리터 베어 프린트 이불커버',69000.00,'곰 프린트와 글리터 별 디테일이 매치된 180TC 퍼케일 면 소재 이불 커버.',5,'따뜻한 이불'),(2,'2021-12-01 19:15:28.812655','2021-12-02 16:04:08.828275','엘리펀트 자수 후드 타월',49000.00,'면 소재 키즈용 후드 타월. 코끼리 자수가 있는 블루 모노크롬 디자인.',7,'자수'),(3,'2021-12-01 19:15:28.814153','2021-12-02 16:04:58.543439','레더 부티',49000.00,'브라운 가죽 부티. 편안한 착용감과 착용하기 쉬운 부착 스트랩.',4,'스트랩'),(4,'2021-12-01 19:15:28.815310','2021-12-02 16:05:20.541537','강아지 쉐이프 실리콘 머그',9000.00,'귀 모양 손잡이가 달린 강아지 얼굴 모양 실리콘 머그.',6,'머그'),(5,'2021-12-01 19:15:28.816400','2021-12-02 16:05:35.287107','로봇 북마크',11000.00,'책과 공책을 위한 책갈피. 로봇 자수 디자인 면 소재.',5,'로봇 자수');
+>>>>>>> main
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -556,7 +621,11 @@ CREATE TABLE `theme_products` (
   KEY `theme_products_theme_id_dcdb1d6e_fk_themes_id` (`theme_id`),
   CONSTRAINT `theme_products_product_id_376b072d_fk_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `theme_products_theme_id_dcdb1d6e_fk_themes_id` FOREIGN KEY (`theme_id`) REFERENCES `themes` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,7 +634,11 @@ CREATE TABLE `theme_products` (
 
 LOCK TABLES `theme_products` WRITE;
 /*!40000 ALTER TABLE `theme_products` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `theme_products` VALUES (1,1,1),(2,2,1),(3,3,3),(4,4,1),(5,5,2),(6,9,3);
+=======
+INSERT INTO `theme_products` VALUES (1,1,1),(2,2,1),(3,3,3),(4,4,1),(5,5,2);
+>>>>>>> main
 /*!40000 ALTER TABLE `theme_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -580,7 +653,11 @@ CREATE TABLE `themes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -611,7 +688,11 @@ CREATE TABLE `users` (
   `cash` decimal(65,2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> main
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -620,7 +701,11 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `users` VALUES (1,'2021-12-01 21:24:28.737089','2021-12-01 21:24:28.737154','이유진','dbwls@hanmail.net','Dldbwls1@','010-1234-5678',631252.00),(2,'2021-12-01 21:24:28.738819','2021-12-01 21:24:28.738827','고민혁','minhyeok@gmail.com','Rhalsgur1@','010-2345-6789',583240.56),(3,'2021-12-01 21:24:28.739642','2021-12-01 21:24:28.739648','김은찬','eunchan@gmail.com','Rladmscks1@','010-3456-7890',554376.11),(4,'2021-12-01 21:24:28.740407','2021-12-01 21:24:28.740412','양주영','jooyoung@gmail.com','Didwndud1@','010-4567-8901',765329.00),(5,'2021-12-01 21:24:28.741164','2021-12-01 21:24:28.741168','김예슬','yesul@gmail.com','RladPtmf1@','010-5678-9012',678320.00),(6,'2021-12-01 21:24:28.741876','2021-12-01 21:24:28.741880','정소영','soyoung@naver.com','Wjdthdud1@','010-6789-0123',666630.55);
+=======
+INSERT INTO `users` VALUES (1,'2021-12-01 21:31:44.929147','2021-12-01 21:31:44.929259','이유진','dbwls@hanmail.net','Dldbwls1@','010-1234-5678',631252.00),(2,'2021-12-01 21:31:44.932541','2021-12-01 21:31:44.932550','고민혁','minhyeok@gmail.com','Rhalsgur1@','010-2345-6789',583240.56),(3,'2021-12-01 21:31:44.933745','2021-12-01 21:31:44.933753','김은찬','eunchan@gmail.com','Rladmscks1@','010-3456-7890',554376.11),(4,'2021-12-01 21:31:44.934864','2021-12-01 21:31:44.934871','양주영','jooyoung@gmail.com','Didwndud1@','010-4567-8901',765329.00),(5,'2021-12-01 21:31:44.935766','2021-12-01 21:31:44.935774','김예슬','yesul@gmail.com','RladPtmf1@','010-5678-9012',678320.00),(6,'2021-12-01 21:31:44.936733','2021-12-01 21:31:44.936744','정소영','soyoung@naver.com','Wjdthdud1@','010-6789-0123',666630.55),(8,'2021-12-06 19:07:35.764151','2021-12-06 19:07:35.764221','김은찬','asd@asd.com','$2b$12$aXHAUGCIlQezWzU3MDkg7Oc9j7mGWD2Un3DlOkL2HRP3tE0yXtiuy',NULL,0.00);
+>>>>>>> main
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -633,4 +718,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2021-12-07 14:27:30
+=======
+-- Dump completed on 2021-12-07 14:27:25
+>>>>>>> main
