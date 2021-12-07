@@ -364,3 +364,4 @@ zsdoc/data
 ############################
 csv/*
 db_uploader.py
+*.sql
