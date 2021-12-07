@@ -10,13 +10,21 @@ class Category(models.Model):
     class Meta: 
         db_table = 'categories'
 
+class ThemeProduct(models.Model): 
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    theme   = models.ForeignKey('Theme', on_delete=models.CASCADE)
+
+    class Meta: 
+        db_table = 'theme_products'
+
 class Product(TimeStampModel): 
     name        = models.CharField(max_length=100)
     price       = models.DecimalField(default=0, max_digits=65, decimal_places=2)
     information = models.CharField(max_length=500)
     keyword     = models.CharField(max_length=100, null=True)
     category    = models.ForeignKey('Category', on_delete=models.CASCADE)
-    
+    themes      = models.ManyToManyField('Theme', through=ThemeProduct)
+
     class Meta: 
         db_table = 'products'
 
@@ -28,13 +36,6 @@ class ProductSet(models.Model):
 
     class Meta: 
         db_table = 'product_sets'
-
-class ThemeProduct(models.Model): 
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    theme   = models.ForeignKey('Theme', on_delete=models.CASCADE)
-
-    class Meta: 
-        db_table = 'theme_products'
 
 class Theme(models.Model): 
     name = models.CharField(max_length=100)

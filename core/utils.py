@@ -5,7 +5,7 @@ from django.http    import JsonResponse
 from zara.settings  import SECRET_KEY, ALGORITHM
 from users.models   import User
 
-def SigninDecorator(func):
+def signin_decorator(func):
     def wrapper(self, request, *args, **kwargs):
         try:
             token        = request.headers.get('Authorization', None)
@@ -21,7 +21,7 @@ def SigninDecorator(func):
         return func(self, request, *args, **kwargs)
     return wrapper
 
-def SigninCheckDecorator(func):
+def signin_check_decorator(func):
     def wrapper(self, request, *args, **kwargs):
         try:
             token        = request.headers.get('Authorization', None)
