@@ -52,6 +52,7 @@ class UserCartView(View):
         except KeyError:
             return JsonResponse({'message' : 'KEY_ERROR'}, status= 401)
 
+
 class CartProductEmptyView(View):
     def post(self, request):
          # 담은 장바구니를 한개의 이미지를 삭제한다면, 장바구니의 이미지만 삭제
