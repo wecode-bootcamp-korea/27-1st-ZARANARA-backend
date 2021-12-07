@@ -5,7 +5,7 @@ from django.views           import View
 from django.db.models       import Q
 from django.core.exceptions import ValidationError
 
-from products.models        import Category, Product, ThemeProduct, Theme, Material, ProductImage, ProductOption, Size, Color
+from products.models        import Category, Product, ThemeProduct, Theme, Material, ProductImage, ProductOption, Size, Color, ProductSet
 from users.models           import Like, User
 from core.utils             import signin_check_decorator
 
@@ -84,10 +84,6 @@ class ProductSetListView(View):
         return JsonResponse({'list_item': list_item}, status = 200)
 
 class ProductListView(View):
-    # :8000/products?offset=0&limit=100&themeId = 1 (O)
-    # :8000/products?offset=0&limit=100&categoryId = 100 (O)
-    # :8000/products/category/10 (X)
-    # :8000/categories/10/products(O)
     def get(self, request):
         offset      = int(request.GET.get('offset', 0))
         limit       = int(request.GET.get('limit', 100))
