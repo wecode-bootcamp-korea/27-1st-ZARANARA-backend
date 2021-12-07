@@ -1,4 +1,4 @@
-import jwt, os
+import jwt
 
 from django.http    import JsonResponse
 
@@ -10,8 +10,7 @@ def SigninDecorator(func):
         try:
             token        = request.headers.get('Authorization', None)
             payload      = jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
-            user         = User.objects.get(id = payload['user_id'])
-            request.user = user
+            request.user = User.objects.get(id = payload['user_id'])
 
         except jwt.exceptions.DecodeError:
             return JsonResponse({'ERROR':'INVALID_TOKEN'}, status=401)
@@ -28,21 +27,18 @@ def SigninCheckDecorator(func):
             token        = request.headers.get('Authorization', None)
 
             if not token:
-                request.user = 0
+                request.user = None
                 return func(self, request, *args, **kwargs)
                 
             payload      = jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
-            user         = User.objects.get(id = payload['user_id'])
-            request.user = user
+            request.user = User.objects.get(id = payload['user_id'])
             
             return func(self, request, *args, **kwargs)
 
         except jwt.exceptions.DecodeError:
-            request.user = 0
-            return func(self, request, *args, **kwargs)
+            return JsonResponse({'ERROR':'INVALID_TOKEN'}, status=401)
 
         except User.DoesNotExist:
-            request.user = 0
-            return func(self, request, *args, **kwargs)
+            return JsonResponse({'ERROR' : 'INVALID_USER'}, status=400)
     return wrapper
 
