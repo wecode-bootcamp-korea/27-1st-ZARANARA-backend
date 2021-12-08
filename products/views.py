@@ -47,6 +47,40 @@ class ProductView(View):
         except Product.DoesNotExist:
             return JsonResponse({'massage':"DoesNotExist"}, status=401)
 
+class SetProductView(View):
+    @signin_check_decorator
+    def get(self, request, product_id):
+        try:
+            product        = Product.objects.get(id=product_id)
+            is_liked       = Like.objects.filter(user=request.user, product=product_id).exists()
+            
+            result = {
+                "id"           : product.id,
+                "name"         : product.name,
+                "price"        : product.price,
+                "information"  : product.information,
+                "keyword"      : product.keyword,
+                "category"     : product.category.name,
+                "is_liked"     : is_liked,
+                "images"       : [{"url" : image.url, "alt" : image.alt} for image in product.productimage_set.all()],
+                "sub_products" : [{
+                    "id"       : product.id,
+                    "name"     : product.name,
+                    "price"    : product.price,
+                    "size"     : product.productoption_set.all()[0].size.name,
+                    "color"    : product.productoption_set.all()[0].color.name,
+                    "images" : [{
+                        "url"   : image.url,
+                        "alt"   : image.alt
+                    }for image in product.productimage_set.all()]
+                } for product.product in ProductSet.objects.filter(product_set_id=product)]
+            }
+
+            return JsonResponse({'result':result}, status=200)
+
+        except Product.DoesNotExist:
+            return JsonResponse({'massage':"DoesNotExist"}, status=401)
+
 class ProductSetListView(View):
     def get(self, request):
         list_item   = []
