@@ -8,11 +8,10 @@ from products.models        import Color, Product, ProductImage, ProductOption, 
 #                         (이름, 가격, 제품번호id?), (알트값, 유알엘), (사이즈)
 from users.models           import User, Cart
 from zara.settings          import SECRET_KEY, ALGORITHM
-from core.utils             import SigninDecorator
-
+from core.utils             import signin_decorator
 
 class UserCartView(View):
-    @SigninDecorator
+    @signin_decorator
     def post(self, request):
         try:
             #유저 정보가 맞으면,
@@ -26,7 +25,7 @@ class UserCartView(View):
                 size  = size,
                 color = color
             )[0]  #---> 변수 product_option 은 객체가 아닌 쿼리셋으로 나오므로, 하나의 사이즈의 하나의 컬러는 한개뿐이므로 쿼리셋의 첫번쨔 인덱스를 불러와주기위해 [0]이 나옴
-            url = ProductImage.objects.get(url=data['id'])
+            
             # size햣 
             # 상품의 장바구니를 담아라(담고 있어야 하는 정보6가지)
             
@@ -41,24 +40,45 @@ class UserCartView(View):
                 user           = user,
                 product_option = product_option,
                 quantity       = quantity
-                    # 상품이름 : 
-                    # 가격 :
-                    # 이미지유알에 : 
-                    # 이미지알트값 :
-                    # 제품번호 : 
-                    # 사이즈 : 
+                    
             )
             return JsonResponse({'message' : 'SUCCESS'}, status= 200)
         except KeyError:
             return JsonResponse({'message' : 'KEY_ERROR'}, status= 401)
 
 
-class CartProductEmptyView(View):
-    def post(self, request):
-         # 담은 장바구니를 한개의 이미지를 삭제한다면, 장바구니의 이미지만 삭제
+class CartView(View):
+    @signin_decorator
+    def get(self, request):
+        #장바구니 보여줄것
+        #request.user -> 유저객체
+        #카트 테이블에 해당 유저가 들어있는 모든 객체가져오기
+        cart_list = Cart.objects.filter(user_id=request.user)
+        cart_list[0].productoption.all
+
+
+
+
+        #카드 : 프로덕트 옵션아이디, 유저아이디
+        ({
+
+        })
+        
+        # 상품이름 : 
+                    # 가격 :
+                    # 이미지유알에 : 
+                    # 이미지알트값 :
+                    # 제품번호 : 
+                    # 사이즈 : 
+         # 담은 장바구니를 \
+
+
+
+
+
 
 # def 장바구니 담은 합계
-
+class CartProductEmptyView
 # def 장바구니 부분 삭제
 
 # def 장바구니 전체 바우는
