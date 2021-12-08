@@ -148,18 +148,17 @@ class ProductListView(View):
 
         return JsonResponse({'results' : results, 'total_count': total_count}, status =200)
 
-class LikeToggleView(View):
+class LikeView(View):
     @signin_decorator
     def post(self, request, product_id):
         try:
-            product  = Product.objects.get(id=product_id)
-            like     = Like.objects.filter(product_id=product.id, user_id=request.user.id)
+            like = Like.objects.filter(product_id=product_id, user_id=request.user.id)
             
             if like:
                 like.delete()
                 return JsonResponse({'massage':"ToggleSuccess"}, status=200)
             else:
-                Like.objects.create(product_id=product.id, user_id=request.user.id)
+                Like.objects.create(product_id=product_id, user_id=request.user.id)
                 return JsonResponse({'massage':"ToggleSuccess"}, status=200)
                 
         except Product.DoesNotExist:
