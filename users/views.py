@@ -50,7 +50,7 @@ class LoginView(View):
                 token = jwt.encode({'user_id' : user_db.id}, SECRET_KEY, ALGORITHM)
                 return JsonResponse({'MESSAGE' : 'SUCCESS', 'ACCESS_TOKEN' : token}, status=200)
             return JsonResponse({'MESSAGE' : 'PASSWORD_INVAILD_USER'}, status=401)
-                                 
+            
         except KeyError:
             return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status=400)
 
