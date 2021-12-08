@@ -71,7 +71,7 @@ class UserCartView(View):
             product        = Product.objects.get(id=data['id'])  # ---> body에 담겨온 상품의 id 값으로 불러오는게 깜끔?
             size           = Size.objects.get(name=data.get('size','ONE SIZE'))  # --> body에는 size라고 담겨있지만, size 모델클래스에는 name이라는 필드로 적혀있음()
             color          = Color.objects.get(name=data.get('color', 'ONE COLOR'))  # ---> body에는 color라고 담겨있지만, color 모델클래스에는 name이라는 필드로 적혀있음
-            quantity       = data['quantity']  # --> body에 quantity로 담겨진 걸 변수에 다시 담음
+            quantity       = data.get('quantity',1) # --> body에 quantity로 담겨진 걸 변수에 다시 담음
             product_option = product.productoption_set.filter(   # ---> products가 참조 하고 있는 프로덕트옵션은 역참조를 하고 있기에, _set을 하고, 옵션에서 불러와야하는게 사이즈랑 컬러므로 위에서 변수에 저장한 color와 size를 넣는것..?
                 size  = size,
                 color = color
@@ -86,25 +86,31 @@ class UserCartView(View):
 
             # if quantity >= product_option.stock:
             #     return JsonResponse({'message' : 'OUT_OF_STOCK'}, status = 404)
-
+            if Cart.objects.filter(user=user, product_option=product_option).exists():
+                return JsonResponse({'message' : 'ITEM_ALREADY_EXIST'}, status=400)
+                
             Cart.objects.create(
                 user           = user,
                 product_option = product_option,
                 quantity       = quantity
             )
+
             return JsonResponse({'message' : 'SUCCESS'}, status= 200)
+
         except KeyError:
             return JsonResponse({'message' : 'KEY_ERROR'}, status= 401)
+
         except Product.DoesNotExist:
             return JsonResponse({'message':'DOESNOTEXIST'}, status = 401)
 
     @signin_decorator
     def get(self, request):
         cart_list = Cart.objects.filter(user_id=request.user)
-        cart=[
+        
+        result=[
            {
-             "color" : cart.product_option.color,
-             "size"  : cart.product_option.size,
+             "color" : cart.product_option.color.name,
+             "size"  : cart.product_option.size.name,
              "image" : cart.product_option.product.productimage_set.all()[0].url,
              "alt"   : cart.product_option.product.productimage_set.all()[0].alt,
              "name"  : cart.product_option.product.name,
@@ -112,19 +118,26 @@ class UserCartView(View):
              "id"    : cart.product_option.product.id,
              "quantity" : cart.quantity,
              "cart_id" : cart.id
-
             }
         for cart in cart_list
         ]
 
+        return JsonResponse({'result': result}, status=200)
+
+
     @signin_decorator
     def delete(self, request):
-        cart_id = request.GET.get('cart')
+        cart_id = request.GET.get('cartId')
         if cart_id:
-            cart_id = int(cart_id)
             Cart.objects.get(id=cart_id).delete()
-        else:
-            Cart.objects.filtet(user=request.user).delete()
+            return JsonResponse({'message':'ITEM_DELETE_SUCCESS'},status = 200)
+
+        if not Cart.objects.filter(user=request.user).exists():
+            return JsonResponse({'message':'OUT_OF_ITEMS'}, status = 400)
+
+        Cart.objects.filter(user=request.user).delete()
+        return JsonResponse({'message':'TOTAL_DELETE_SUCCESS'},status = 200)
+    
 
 
     @signin_decorator
