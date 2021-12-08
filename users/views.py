@@ -130,7 +130,7 @@ class UserCartView(View):
         cart_id = request.GET.get('cartId')
         if cart_id: 
             Cart.objects.get(id=cart_id).delete()
-            return JsonResponse({'message':'ITEM_DELETE_SUCCESS'},status = 200)
+            return JsonResponse({'message':'ITEM_DELETED'},status = 200)
 
         if not Cart.objects.filter(user=request.user).exists(): 
             return JsonResponse({'message':'OUT_OF_ITEMS'}, status = 400)
