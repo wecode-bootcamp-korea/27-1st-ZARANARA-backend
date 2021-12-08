@@ -152,14 +152,12 @@ class LikeView(View):
     @signin_decorator
     def post(self, request, product_id):
         try:
-            like = Like.objects.filter(product_id=product_id, user_id=request.user.id)
+            like, is_like = Like.objects.get_or_create(product_id=product_id, user_id=request.user.id)
             
-            if like:
+            if not is_like: 
                 like.delete()
-                return JsonResponse({'massage':"ToggleSuccess"}, status=200)
-            else:
-                Like.objects.create(product_id=product_id, user_id=request.user.id)
-                return JsonResponse({'massage':"ToggleSuccess"}, status=200)
+            
+            return JsonResponse({'massage':"ToggleSuccess"}, status=200)
                 
         except Product.DoesNotExist:
             return JsonResponse({'massage':"DoesNotExist"}, status=401)
