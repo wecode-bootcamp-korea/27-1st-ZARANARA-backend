@@ -65,23 +65,19 @@ class UserCartView(View):
     def post(self, request):
         try:
             data           = json.loads(request.body)
-            user           = request.user
-            product        = Product.objects.get(id=data['id']) 
-            size           = Size.objects.get(name=data.get('size','ONE SIZE'))
-            color          = Color.objects.get(name=data.get('color', 'ONE COLOR'))
-            quantity       = data.get('quantity',1) 
-            product_option = product.productoption_set.filter(  
-                size  = size,
-                color = color
-            )[0] 
-
-            if Cart.objects.filter(user=user, product_option=product_option).exists():
+            user_id        = request.user.id
+            product_id     = Product.objects.get(id=data['product_id']).id
+            quantity       = data.get('quantity',1)
+            # size           = Size.objects.get(name=data.get('size','ONE SIZE'))
+            # color          = Color.objects.get(name=data.get('color', 'ONE COLOR'))
+            
+            if Cart.objects.filter(user=user_id, product=product_id).exists():
                 return JsonResponse({'MESSAGE' : 'ITEM_ALREADY_EXIST'}, status=400)
                 
             Cart.objects.create(
-                user           = user,
-                product_option = product_option,
-                quantity       = quantity
+                user     = user_id,
+                product  = product_id,
+                quantity = quantity
             )
 
             return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 200)
@@ -90,23 +86,21 @@ class UserCartView(View):
             return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 401)
 
         except Product.DoesNotExist: 
-            return JsonResponse({'MESSAGE':'DOES_NOT_EXIST'}, status = 401)
+            return JsonResponse({'MESSAGE' : 'DOES_NOT_EXIST'}, status = 401)
 
     @signin_decorator
     def get(self, request):
-        cart_list = Cart.objects.filter(user_id=request.user)
+        cart_list = Cart.objects.filter(user_id=request.user.id)
         
         result=[
            {
-             "color"   : cart.product_option.color.name,
-             "size"    : cart.product_option.size.name,
-             "image"   : cart.product_option.product.productimage_set.all()[0].url,
-             "alt"     : cart.product_option.product.productimage_set.all()[0].alt,
-             "name"    : cart.product_option.product.name,
-             "price"   : cart.product_option.product.price,
-             "id"      : cart.product_option.product.id,
-             "quantity": cart.quantity,
-             "cart_id" : cart.id
+             "image"     : cart.product.productimage_set.all()[0].url,
+             "alt"       : cart.product.productimage_set.all()[0].alt,
+             "name"      : cart.product.name,
+             "price"     : cart.product.price,
+             "product_id": cart.product.id,
+             "quantity"  : cart.quantity,
+             "cart_id"   : cart.id
             }
         for cart in cart_list
         ]
@@ -132,11 +126,11 @@ class UserCartView(View):
     @signin_decorator
     def patch(self, request):
         try:
-            data            = json.loads(request.body)
-            quantity        = data['quantity']
-            cart_id         = data['cart_id']
-            cart            = Cart.objects.get(id=cart_id, user_id=request.user)
-            cart.quantity   = int(quantity)
+            data          = json.loads(request.body)
+            quantity      = data['quantity']
+            cart_id       = data['cart_id']
+            cart          = Cart.objects.get(id=cart_id, user_id=request.user)
+            cart.quantity = int(quantity)
 
             cart.save()
             
