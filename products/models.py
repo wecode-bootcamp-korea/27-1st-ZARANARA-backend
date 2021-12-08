@@ -17,13 +17,6 @@ class ThemeProduct(models.Model):
     class Meta: 
         db_table = 'theme_products'
 
-class ThemeProduct(models.Model): 
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    theme   = models.ForeignKey('Theme', on_delete=models.CASCADE)
-
-    class Meta: 
-        db_table = 'theme_products'
-
 class Product(TimeStampModel): 
     name        = models.CharField(max_length=100)
     price       = models.DecimalField(default=0, max_digits=65, decimal_places=2)
