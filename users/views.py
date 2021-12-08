@@ -38,7 +38,7 @@ class SignUpView(View):
             return JsonResponse({"MESSAGE" : "KEY_ERROR"}, status = 400)
 
         except ValidationError as v:
-            return JsonResponse({'MESSAGE' : v.message}, status=400)
+            return JsonResponse({'MESSAGE' : v.message}, status=401)
 
 
 class LoginView(View):
@@ -58,7 +58,7 @@ class LoginView(View):
             return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status=400)
 
         except User.DoesNotExist:
-            return JsonResponse({'MESSAGE' : 'EMAIL_INVALD_USER'}, status=401)
+            return JsonResponse({'MESSAGE' : 'EMAIL_INVALD_USER'}, status=400)
 
 #                         (이름, 가격, 제품번호id?), (알트값, 유알엘), (사이즈)
 class UserCartView(View):
@@ -209,3 +209,4 @@ class UserCartView(View):
 # # def 장바구니 부분 삭제
 
 # # def 장바구니 전체 바우는
+
