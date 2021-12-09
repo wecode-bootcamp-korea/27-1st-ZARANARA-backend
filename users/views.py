@@ -68,8 +68,6 @@ class UserCartView(View):
             user_id        = request.user.id
             product_id     = Product.objects.get(id=data['product_id']).id
             quantity       = data.get('quantity',1)
-            # size           = Size.objects.get(name=data.get('size','ONE SIZE'))
-            # color          = Color.objects.get(name=data.get('color', 'ONE COLOR'))
             
             if Cart.objects.filter(user=user_id, product=product_id).exists():
                 return JsonResponse({'MESSAGE' : 'ITEM_ALREADY_EXIST'}, status=400)
