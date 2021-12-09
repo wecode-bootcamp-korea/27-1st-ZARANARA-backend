@@ -55,25 +55,25 @@ class SetProductView(View):
             is_liked       = Like.objects.filter(user=request.user, product=product_id).exists()
             
             result = {
-                "id"           : product.id,
-                "name"         : product.name,
-                "price"        : product.price,
-                "information"  : product.information,
-                "keyword"      : product.keyword,
-                "category"     : product.category.name,
-                "is_liked"     : is_liked,
-                "images"       : [{"url" : image.url, "alt" : image.alt} for image in product.productimage_set.all()],
-                "sub_products" : [{
-                    "id"       : product.id,
-                    "name"     : product.name,
-                    "price"    : product.price,
-                    "size"     : product.productoption_set.all()[0].size.name,
-                    "color"    : product.productoption_set.all()[0].color.name,
-                    "images" : [{
-                        "url"   : image.url,
-                        "alt"   : image.alt
-                    }for image in product.productimage_set.all()]
-                } for product.product in ProductSet.objects.filter(product_set_id=product)]
+                "id"          : product.id,
+                "name"        : product.name,
+                "price"       : product.price,
+                "information" : product.information,
+                "keyword"     : product.keyword,
+                "category"    : product.category.name,
+                "is_liked"    : is_liked,
+                "images"      : [{"url" : image.url, "alt" : image.alt} for image in product.productimage_set.all()],
+                "sub_products": [{
+                    "id"    : product.product.id,
+                    "name"  : product.product.name,
+                    "price" : product.product.price,
+                    "size"  : product.product.productoption_set.all()[0].size.name,
+                    "color" : product.product.productoption_set.all()[0].color.name,
+                    "images": [{
+                        "url": image.url,
+                        "alt": image.alt
+                    }for image in product.product.productimage_set.all()]
+                } for product in ProductSet.objects.filter(product_set=product)]
             }
 
             return JsonResponse({'result':result}, status=200)
