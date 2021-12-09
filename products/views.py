@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 
 from products.models        import Category, Product, ThemeProduct, Theme, Material, ProductImage, ProductOption, Size, Color, ProductSet
 from users.models           import Like, User
-from core.utils             import signin_check_decorator
+from core.utils             import signin_check_decorator, signin_decorator
 
 class ProductView(View):
     @signin_check_decorator
@@ -147,3 +147,17 @@ class ProductListView(View):
         } for product in products[offset:limit]]
 
         return JsonResponse({'results' : results, 'total_count': total_count}, status =200)
+
+class LikeView(View):
+    @signin_decorator
+    def post(self, request, product_id):
+        try:
+            like, is_like = Like.objects.get_or_create(product_id=product_id, user_id=request.user.id)
+            
+            if not is_like: 
+                like.delete()
+            
+            return JsonResponse({'massage':"ToggleSuccess"}, status=200)
+                
+        except Product.DoesNotExist:
+            return JsonResponse({'massage':"DoesNotExist"}, status=401)
