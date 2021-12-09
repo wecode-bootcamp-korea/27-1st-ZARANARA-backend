@@ -124,8 +124,16 @@ class ProductListView(View):
         theme_id    = int(request.GET.get("themeId", None)) if request.GET.get("themeId", None) != None else None
         category_id = int(request.GET.get("categoryId", None)) if request.GET.get("categoryId", None) != None else None
         ordering    = str(request.GET.get('ordering','created_at'))
+        is_new      = request.GET.get('isNew',False)
+        is_popular  = request.GET.get('isPopular', False)
 
         q = Q()
+
+        if is_new:
+            q &= Q(is_new = True)
+
+        if is_popular:
+            q &= Q(is_popular = True)
 
         if limit > 100:
             return JsonResponse({'MESSAGE':'LIMIT_ERROR'}, status = 400)
