@@ -68,7 +68,7 @@ class UserCartView(View):
             data           = json.loads(request.body)
             user_id        = request.user.id
             product_id     = Product.objects.get(id=data['product_id']).id
-            quantity       = data.get('quantity',1)
+            quantity       = data.get['quantity']
             
             if Cart.objects.filter(user=user_id, product=product_id).exists():
                 return JsonResponse({'MESSAGE' : 'ITEM_ALREADY_EXIST'}, status=400)
@@ -79,10 +79,10 @@ class UserCartView(View):
                 quantity = quantity
             )
 
-            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 200)
+            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 201)
 
         except KeyError: 
-            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 401)
+            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 400)
 
         except Product.DoesNotExist: 
             return JsonResponse({'MESSAGE' : 'DOES_NOT_EXIST'}, status = 401)
@@ -110,6 +110,7 @@ class UserCartView(View):
     @signin_decorator
     def delete(self, request):
         cart_id = request.GET.get('cartId')
+        
         if cart_id: 
             Cart.objects.get(id=cart_id).delete()
             return JsonResponse({'MESSAGE':'ITEM_DELETED'},status = 200)
