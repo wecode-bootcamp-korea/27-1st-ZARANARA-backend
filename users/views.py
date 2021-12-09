@@ -89,7 +89,7 @@ class UserCartView(View):
 
     @signin_decorator
     def get(self, request):
-        cart_list = Cart.objects.filter(user_id=request.user.id)
+        cart_list = Cart.objects.filter(user_id=request.user)
         
         result=[
            {
