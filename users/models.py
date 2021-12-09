@@ -23,9 +23,9 @@ class Address(models.Model):
         db_table = 'address'
 
 class Cart(models.Model): 
-    user     = models.ForeignKey('User', on_delete=models.CASCADE)
-    product  = models.ForeignKey(Product, on_delete=models.CASCADE, unique=True)
-    quantity = models.IntegerField(default=1)
+    user           = models.ForeignKey('User', on_delete=models.CASCADE)
+    product_option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    quantity       = models.IntegerField(default=1)
     
     class Meta: 
         db_table = 'carts'
