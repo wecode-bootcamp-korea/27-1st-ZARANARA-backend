@@ -22,7 +22,7 @@ class SignUpView(View):
             email_check(user_email)
 
             if User.objects.filter(email = user_email).exists():
-                return JsonResponse({"MESSAGE" : "EMAIL_ALLEADY_EXIST"}, status=400)
+                return JsonResponse({"MESSAGE" : "EMAIL_ALREADY_EXIST"}, status=400)
         
             password_check(user_password)
 
@@ -52,6 +52,7 @@ class LoginView(View):
             if bcrypt.checkpw(user_password.encode('utf-8'), user_db.password.encode('utf-8')):
                 token = jwt.encode({'user_id' : user_db.id}, SECRET_KEY, ALGORITHM)
                 return JsonResponse({'MESSAGE' : 'SUCCESS', 'ACCESS_TOKEN' : token}, status=200)
+
             return JsonResponse({'MESSAGE' : 'PASSWORD_INVAILD_USER'}, status=401)
             
         except KeyError:
@@ -65,11 +66,9 @@ class UserCartView(View):
     def post(self, request):
         try:
             data           = json.loads(request.body)
-            user_id        = request.user.id
-            product_id     = Product.objects.get(id=data['product_id']).id
-            quantity       = data.get('quantity',1)
-            # size           = Size.objects.get(name=data.get('size','ONE SIZE'))
-            # color          = Color.objects.get(name=data.get('color', 'ONE COLOR'))
+            user_id        = request.user
+            product_id     = Product.objects.get(id=data['product_id'])
+            quantity       = data['quantity']
             
             if Cart.objects.filter(user=user_id, product=product_id).exists():
                 return JsonResponse({'MESSAGE' : 'ITEM_ALREADY_EXIST'}, status=400)
@@ -80,17 +79,17 @@ class UserCartView(View):
                 quantity = quantity
             )
 
-            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 200)
+            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 201)
 
         except KeyError: 
-            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 401)
+            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 400)
 
         except Product.DoesNotExist: 
             return JsonResponse({'MESSAGE' : 'DOES_NOT_EXIST'}, status = 401)
 
     @signin_decorator
     def get(self, request):
-        cart_list = Cart.objects.filter(user_id=request.user.id)
+        cart_list = Cart.objects.filter(user_id=request.user)
         
         result=[
            {
@@ -111,6 +110,7 @@ class UserCartView(View):
     @signin_decorator
     def delete(self, request):
         cart_id = request.GET.get('cartId')
+
         if cart_id: 
             Cart.objects.get(id=cart_id).delete()
             return JsonResponse({'MESSAGE':'ITEM_DELETED'},status = 200)

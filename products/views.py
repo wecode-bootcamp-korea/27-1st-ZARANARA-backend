@@ -55,25 +55,25 @@ class SetProductView(View):
             is_liked       = Like.objects.filter(user=request.user, product=product_id).exists()
             
             result = {
-                "id"           : product.id,
-                "name"         : product.name,
-                "price"        : product.price,
-                "information"  : product.information,
-                "keyword"      : product.keyword,
-                "category"     : product.category.name,
-                "is_liked"     : is_liked,
-                "images"       : [{"url" : image.url, "alt" : image.alt} for image in product.productimage_set.all()],
-                "sub_products" : [{
-                    "id"       : product.id,
-                    "name"     : product.name,
-                    "price"    : product.price,
-                    "size"     : product.productoption_set.all()[0].size.name,
-                    "color"    : product.productoption_set.all()[0].color.name,
-                    "images" : [{
-                        "url"   : image.url,
-                        "alt"   : image.alt
-                    }for image in product.productimage_set.all()]
-                } for product.product in ProductSet.objects.filter(product_set_id=product)]
+                "id"          : product.id,
+                "name"        : product.name,
+                "price"       : product.price,
+                "information" : product.information,
+                "keyword"     : product.keyword,
+                "category"    : product.category.name,
+                "is_liked"    : is_liked,
+                "images"      : [{"url" : image.url, "alt" : image.alt} for image in product.productimage_set.all()],
+                "sub_products": [{
+                    "id"    : product.product.id,
+                    "name"  : product.product.name,
+                    "price" : product.product.price,
+                    "size"  : product.product.productoption_set.all()[0].size.name,
+                    "color" : product.product.productoption_set.all()[0].color.name,
+                    "images": [{
+                        "url": image.url,
+                        "alt": image.alt
+                    }for image in product.product.productimage_set.all()]
+                } for product in ProductSet.objects.filter(product_set=product)]
             }
 
             return JsonResponse({'result':result}, status=200)
@@ -124,8 +124,16 @@ class ProductListView(View):
         theme_id    = int(request.GET.get("themeId", None)) if request.GET.get("themeId", None) != None else None
         category_id = int(request.GET.get("categoryId", None)) if request.GET.get("categoryId", None) != None else None
         ordering    = str(request.GET.get('ordering','created_at'))
+        is_new      = request.GET.get('isNew',False)
+        is_popular  = request.GET.get('isPopular', False)
 
         q = Q()
+
+        if is_new:
+            q &= Q(is_new = True)
+
+        if is_popular:
+            q &= Q(is_popular = True)
 
         if limit > 100:
             return JsonResponse({'MESSAGE':'LIMIT_ERROR'}, status = 400)
