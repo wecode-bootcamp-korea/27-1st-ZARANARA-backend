@@ -121,7 +121,7 @@ class ProductListView(View):
     def get(self, request):
         offset      = int(request.GET.get('offset', 0))
         limit       = int(request.GET.get('limit', 100))
-        theme_id    = int(request.GET.get("themeId", None)) if request.GET.get("themeId", None) != None else None
+        theme_id    = int(request.GET.get("themeId", None)) if request.GET.get("themeId", None) != None else 3
         category_id = int(request.GET.get("categoryId", None)) if request.GET.get("categoryId", None) != None else None
         ordering    = str(request.GET.get('ordering','created_at'))
         is_new      = request.GET.get('isNew',False)

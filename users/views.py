@@ -22,7 +22,7 @@ class SignUpView(View):
             email_check(user_email)
 
             if User.objects.filter(email = user_email).exists():
-                return JsonResponse({"MESSAGE" : "EMAIL_ALLEADY_EXIST"}, status=400)
+                return JsonResponse({"MESSAGE" : "EMAIL_ALREADY_EXIST"}, status=400)
         
             password_check(user_password)
 
@@ -52,6 +52,7 @@ class LoginView(View):
             if bcrypt.checkpw(user_password.encode('utf-8'), user_db.password.encode('utf-8')):
                 token = jwt.encode({'user_id' : user_db.id}, SECRET_KEY, ALGORITHM)
                 return JsonResponse({'MESSAGE' : 'SUCCESS', 'ACCESS_TOKEN' : token}, status=200)
+
             return JsonResponse({'MESSAGE' : 'PASSWORD_INVAILD_USER'}, status=401)
             
         except KeyError:
