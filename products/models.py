@@ -24,6 +24,8 @@ class Product(TimeStampModel):
     keyword     = models.CharField(max_length=100, null=True)
     category    = models.ForeignKey('Category', on_delete=models.CASCADE)
     themes      = models.ManyToManyField('Theme', through=ThemeProduct)
+    is_new      = models.BooleanField(default=True)
+    is_popular  = models.BooleanField(default=False)
 
     class Meta: 
         db_table = 'products'
