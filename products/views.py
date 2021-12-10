@@ -87,7 +87,7 @@ class ProductSetListView(View):
         offset      = int(request.GET.get('offset', 0))
         limit       = int(request.GET.get('limit', 100))
         category_id = int(request.GET.get('categoryId',8))
-        order       = request.GET.get('order', '-price')
+        order       = request.GET.get('order', 'id')
         items       = Product.objects.select_related('category')\
                                     .filter(category=category_id).order_by(order)[offset:limit]
         
