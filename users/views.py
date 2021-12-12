@@ -79,7 +79,6 @@ class UserCartView(View):
         try:
             data       = json.loads(request.body)
             #물품 정보를 받을 것
-            user       = request.user
             print(1)
             product_id = data['product_id'] # --> 키값을 product로 정해도 되나, 정확히 어떤 정보를 갖고 올건지...name price도 좋으나 중복값이 없는 id값이 명확해서 좋음 --> httpie 통신(프론트 통신)할때도 키값을 맞추기
             print(2)
@@ -88,7 +87,7 @@ class UserCartView(View):
             
             print(3)
             Cart.objects.create(
-                user     = User.objects.get(id = user.id),
+                user     = request.user,
                 product  = Product.objects.get(id = product_id),
                 quantity = quantity 
             )
