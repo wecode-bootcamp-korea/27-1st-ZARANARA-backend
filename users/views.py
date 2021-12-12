@@ -81,7 +81,7 @@ class UserCartView(View):
             #물품 정보를 받을 것
             user       = request.user
             print(1)
-            product_id = data['product_id'] # --> 키값을 product로 정해도 되나, 정확히 어떤 정보를 갖고 올건지...name price도 좋으나 중복값이 없는 id값이 좋음
+            product_id = data['product_id'] # --> 키값을 product로 정해도 되나, 정확히 어떤 정보를 갖고 올건지...name price도 좋으나 중복값이 없는 id값이 명확해서 좋음 --> httpie 통신(프론트 통신)할때도 키값을 맞추기
             print(2)
             quantity   = data['quantity']
             #유저 정보 담긴 무엇가
@@ -92,10 +92,10 @@ class UserCartView(View):
                 product  = Product.objects.get(id = product_id),
                 quantity = quantity 
             )
-            return JsonResponse({'message':'success'}, status=201)
+            return JsonResponse({'message':'success'}, status=201) 
         except KeyError:
             return JsonResponse({'message':'keyerror'}, status=400)
 
-        except JSONDecodeError: # --> 500에러 뜸 / Cart 생성할때, 키값과 벨류값 안주고 토근만 넘겨줄때 발생한 에러
-            return JsonResponse({'message':'decodeerror'}) # --> 제이슨디코드에러를 설정했더니 갑자기 200 코드 발생...난 아무것도 상태코드를 넣지 않앟ㅆ는데...
+        except JSONDecodeError: # --> 500에러 뜸 / Cart 생성할때, 키값과 벨류값 안주고 토근만 넘겨줄때 발생한 에러(header에 있는 토큰값만 주고 body에 넘겨줄 키값과 벨류값이 없어서 발생하는 에러 : 즉, 토큰과 함께 body에 담겨줄 정보를 넘겨주면 에러 해결)
+            return JsonResponse({'message':'body '}, status=400) # --> 제이슨디코드에러를 설정했더니 갑자기 200 코드 발생...난 아무것도 상태코드를 넣지 않앟ㅆ는데...(아직 status코드를 내가 작성하지 않아서 defalt값인 200상태 코드가 뜨는것, 적절한 상태 코드 넣으면 해결)
 
