@@ -70,15 +70,10 @@ class UserCartView(View):
             data       = json.loads(request.body)
             product_id = data['product_id']
             quantity   = data['quantity']
-            user_product = Cart.objects.filter(user=request.user, product=product_id)
 
-            if user_product.exists():
-                Cart.objects.get(
-                    quantity = user_product[0].quantity + quantity,
-                )
-                Cart.save()
+            if Cart.objects.filter(user=request.user, product=product_id).exists():
                 return JsonResponse({'message':'CART_IN_PRODUCT'}, status=400)
-                
+
             else:
                 Cart.objects.create(
                     user     = request.user,
@@ -92,6 +87,3 @@ class UserCartView(View):
 
         except JSONDecodeError: 
             return JsonResponse({'message':'JSON_DECODE_ERROR'}, status=400)
-
-        except Cart.DoesNotExist:
-            return JsonResponse({'message':'DOES_NOT_EXIST'}, status=400)
