@@ -1,4 +1,6 @@
 import json, bcrypt, jwt
+from json.decoder import JSONDecodeError
+import re
 
 from django.http.response   import JsonResponse
 from django.core.exceptions import ValidationError
@@ -65,79 +67,23 @@ class UserCartView(View):
     @signin_decorator
     def post(self, request):
         try:
-            data           = json.loads(request.body)
-            user_id        = request.user
-            product_id     = Product.objects.get(id=data['product_id'])
-            quantity       = data['quantity']
-            
-            if Cart.objects.filter(user=user_id, product=product_id).exists():
-                return JsonResponse({'MESSAGE' : 'ITEM_ALREADY_EXIST'}, status=400)
-                
-            Cart.objects.create(
-                user     = user_id,
-                product  = product_id,
-                quantity = quantity
-            )
+            data       = json.loads(request.body)
+            product_id = data['product_id']
+            quantity   = data['quantity']
 
-            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status= 201)
+            if Cart.objects.filter(user=request.user, product=product_id).exists():
+                return JsonResponse({'message':'CART_IN_PRODUCT'}, status=400)
 
-        except KeyError: 
-            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status= 400)
-
-        except Product.DoesNotExist: 
-            return JsonResponse({'MESSAGE' : 'DOES_NOT_EXIST'}, status = 401)
-
-    @signin_decorator
-    def get(self, request):
-        cart_list = Cart.objects.filter(user_id=request.user)
-        
-        result=[
-           {
-             "image"     : cart.product.productimage_set.all()[0].url,
-             "alt"       : cart.product.productimage_set.all()[0].alt,
-             "name"      : cart.product.name,
-             "price"     : cart.product.price,
-             "product_id": cart.product.id,
-             "quantity"  : cart.quantity,
-             "cart_id"   : cart.id
-            }
-        for cart in cart_list
-        ]
-
-        return JsonResponse({'result': result}, status=200)
-
-
-    @signin_decorator
-    def delete(self, request):
-        cart_id = request.GET.get('cartId')
-
-        if cart_id: 
-            Cart.objects.get(id=cart_id).delete()
-            return JsonResponse({'MESSAGE':'ITEM_DELETED'},status = 200)
-
-        if not Cart.objects.filter(user=request.user).exists(): 
-            return JsonResponse({'MESSAGE':'DOES_NOT_EXIST'}, status = 400)
-
-        Cart.objects.filter(user=request.user).delete()
-        return JsonResponse({'MESSAGE':'ALL_DELETED'},status = 200)
-    
-
-
-    @signin_decorator
-    def patch(self, request):
-        try:
-            data          = json.loads(request.body)
-            quantity      = data['quantity']
-            cart_id       = data['cart_id']
-            cart          = Cart.objects.get(id=cart_id, user_id=request.user)
-            cart.quantity = int(quantity)
-
-            cart.save()
-            
-            return JsonResponse({'MESSAGE':'SUCCESS'}, status=201)
+            else:
+                Cart.objects.create(
+                    user     = request.user,
+                    product  = Product.objects.get(id = product_id), 
+                    quantity = quantity
+                )
+                return JsonResponse({'message':'SUCCESS'}, status=201) 
 
         except KeyError:
-            return JsonResponse({'MESSAGE':'KEY_ERROR'}, status=400)
+            return JsonResponse({'message':'KEY_ERROR'}, status=400)
 
-        except User.DoesNotExist:
-            return JsonResponse({'MESSAGE':'OBJECT_NOT_EXITST'}, status=400)
+        except JSONDecodeError: 
+            return JsonResponse({'message':'JSON_DECODE_ERROR'}, status=400)
