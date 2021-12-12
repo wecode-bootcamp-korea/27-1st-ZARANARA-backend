@@ -68,14 +68,24 @@ class UserCartView(View):
     def post(self, request):
         try:
             data       = json.loads(request.body)
-            product_id = data['product_id'] 
+            product_id = data['product_id']
             quantity   = data['quantity']
+            print(1)
+            user_product = Cart.objects.filter(user=request.user, product=product_id)
+            print(2)
 
-            Cart.objects.create(
-                user     = request.user,
-                product  = Product.objects.get(id = product_id),
-                quantity = quantity
-            )
+            if user_product.exists():
+                Cart.objects.update(                
+                    quantity = user_product[0].quantity + quantity
+                )
+                return JsonResponse({'message':'CART_IN_PRODUCT'}, status=400)
+            else:
+                
+                Cart.objects.create(
+                    user     = request.user,
+                    product  = Product.objects.get(id = product_id), 
+                    quantity = quantity
+                )
             return JsonResponse({'message':'SUCCESS'}, status=201) 
 
         except KeyError:
