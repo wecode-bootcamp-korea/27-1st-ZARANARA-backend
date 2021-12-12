@@ -74,7 +74,7 @@ class UserCartView(View):
             Cart.objects.create(
                 user     = request.user,
                 product  = Product.objects.get(id = product_id),
-                quantity = quantity 
+                quantity = quantity
             )
             return JsonResponse({'message':'SUCCESS'}, status=201) 
 
@@ -83,4 +83,3 @@ class UserCartView(View):
 
         except JSONDecodeError: 
             return JsonResponse({'message':'JSON_DECODE_ERROR'}, status=400)
-
